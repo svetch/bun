@@ -257,8 +257,8 @@ async function runTests() {
       const absoluteTestPath = join(testsPath, testPath);
       const title = relative(cwd, absoluteTestPath).replaceAll(sep, "/");
       if (isNodeParallelTest(testPath)) {
-        const runWithBunTest =
-          title.includes("needs-test") || readFileSync(absoluteTestPath, "utf-8").includes("bun:test");
+        const testContent = readFileSync(absoluteTestPath, "utf-8");
+        const runWithBunTest = title.includes("needs-test") || testContent.includes("bun:test") || testContent.include("node:test");
         const subcommand = runWithBunTest ? "test" : "run";
         await runTest(title, async () => {
           const { ok, error, stdout } = await spawnBun(execPath, {
