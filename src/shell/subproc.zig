@@ -1128,10 +1128,10 @@ pub const PipeReader = struct {
         if (Environment.isWindows) {
             this.reader.source =
                 switch (result) {
-                .buffer => .{ .pipe = this.stdio_result.buffer },
-                .buffer_fd => .{ .file = bun.io.Source.openFile(this.stdio_result.buffer_fd) },
-                .unavailable => @panic("Shouldn't happen."),
-            };
+                    .buffer => .{ .pipe = this.stdio_result.buffer },
+                    .buffer_fd => .{ .file = bun.io.Source.openFile(this.stdio_result.buffer_fd) },
+                    .unavailable => @panic("Shouldn't happen."),
+                };
         }
         this.reader.setParent(this);
 
@@ -1140,7 +1140,7 @@ pub const PipeReader = struct {
 
     pub fn readAll(this: *PipeReader) void {
         if (this.state == .pending)
-            this.reader.read();
+            this.reader.read(null);
     }
 
     pub fn start(this: *PipeReader, process: *ShellSubprocess, event_loop: JSC.EventLoopHandle) JSC.Maybe(void) {
@@ -1373,6 +1373,10 @@ pub const PipeReader = struct {
 
         this.reader.deinit();
         this.destroy();
+    }
+
+    pub fn getLimit(_: *PipeReader) ?*u64 {
+        return null;
     }
 };
 

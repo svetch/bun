@@ -10591,9 +10591,9 @@ pub const Interpreter = struct {
                         if (err == .sys and
                             err.sys.getErrno() == .BUSY and
                             (task.tgt_absolute != null and
-                            err.sys.path.eqlUTF8(task.tgt_absolute.?)) or
+                                err.sys.path.eqlUTF8(task.tgt_absolute.?)) or
                             (task.src_absolute != null and
-                            err.sys.path.eqlUTF8(task.src_absolute.?)))
+                                err.sys.path.eqlUTF8(task.src_absolute.?)))
                         {
                             log("{} got ebusy {d} {d}", .{ this, this.state.exec.ebusy.tasks.items.len, this.state.exec.paths_to_copy.len });
                             this.state.exec.ebusy.tasks.append(bun.default_allocator, task) catch bun.outOfMemory();
@@ -11286,6 +11286,11 @@ pub const Interpreter = struct {
         pub fn asyncDeinit(this: *@This()) void {
             log("IOReader(0x{x}) asyncDeinit", .{@intFromPtr(this)});
             this.async_deinit.enqueue();
+        }
+
+        pub fn getLimit(this: *IOReader) ?*u64 {
+            _ = this;
+            return null;
         }
 
         pub fn __deinit(this: *@This()) void {

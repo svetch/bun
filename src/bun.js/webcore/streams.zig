@@ -4320,7 +4320,7 @@ pub const FileReader = struct {
             }
         } else if (comptime Environment.isPosix) {
             if (!was_lazy and this.reader.flags.pollable) {
-                this.reader.read();
+                this.reader.read(null);
             }
         }
 
@@ -4551,7 +4551,7 @@ pub const FileReader = struct {
 
         if (!this.reader.hasPendingRead()) {
             this.read_inside_on_pull = .{ .js = buffer };
-            this.reader.read();
+            this.reader.read(null); // TODO: file reader has a max_size
 
             defer this.read_inside_on_pull = .{ .none = {} };
             switch (this.read_inside_on_pull) {
@@ -4702,6 +4702,11 @@ pub const FileReader = struct {
     pub fn memoryCost(this: *const FileReader) usize {
         // ReadableStreamSource covers @sizeOf(FileReader)
         return this.reader.memoryCost() + this.buffered.capacity;
+    }
+
+    pub fn getLimit(this: *const FileReader) ?*u64 {
+        _ = this;
+        return null;
     }
 
     pub const Source = ReadableStreamSource(
