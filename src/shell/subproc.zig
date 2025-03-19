@@ -1375,7 +1375,9 @@ pub const PipeReader = struct {
         this.destroy();
     }
 
-    pub fn getLimit(_: *PipeReader) ?*u64 {
+    pub fn getLimit(_: *PipeReader) ?*i64 {
+        bun.logGroup(@src());
+        defer bun.logGroupEnd();
         return null;
     }
 };
