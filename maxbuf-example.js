@@ -6,7 +6,7 @@ async function runCommandWithMaxBuffer() {
 
   // Create a subprocess with a maxBuffer of 10 bytes
   // This means the stdout/stderr readers will only buffer up to 10 bytes
-  const process = spawn("echo", ["This text is longer than the maxBuffer limit"], {
+  const process = spawn("bun", ["-p", "console.log('This text is longer than the maxBuffer limit'); while(true) {}"], {
     maxBuffer: 10,
   });
 
