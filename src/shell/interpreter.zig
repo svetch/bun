@@ -11289,8 +11289,6 @@ pub const Interpreter = struct {
         }
 
         pub fn getLimit(_: *IOReader) ?*i64 {
-            bun.logGroup(@src());
-            defer bun.logGroupEnd();
             return null;
         }
 

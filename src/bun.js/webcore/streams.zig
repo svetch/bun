@@ -4705,8 +4705,6 @@ pub const FileReader = struct {
     }
 
     pub fn getLimit(_: *const FileReader) ?*i64 {
-        bun.logGroup(@src());
-        defer bun.logGroupEnd();
         return null;
     }
 

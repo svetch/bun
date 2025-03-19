@@ -1376,8 +1376,6 @@ pub const PipeReader = struct {
     }
 
     pub fn getLimit(_: *PipeReader) ?*i64 {
-        bun.logGroup(@src());
-        defer bun.logGroupEnd();
         return null;
     }
 };
